@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://clsaqcdckajfd"]
+
+[ext_resource type="Script" uid="uid://cv3b3vpwqqi4s" path="res://scriptcs/dide_zone.gd" id="1_ek6ni"]
+
+[node name="Dide_Zone" type="Area3D"]
+script = ExtResource("1_ek6ni")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

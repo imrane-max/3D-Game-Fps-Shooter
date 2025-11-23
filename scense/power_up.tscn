@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://t8kc1u23y1e4"]
+
+[ext_resource type="Script" uid="uid://bvht6ghtvo64e" path="res://scriptcs/power_up.gd" id="1_t02xc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_elqa8"]
+albedo_color = Color(0, 0.8, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t02xc"]
+size = Vector3(0.29, 1, 0.29)
+
+[sub_resource type="Animation" id="Animation_ftrom"]
+resource_name = "Rotation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_38b43"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_axa5m"]
+_data = {
+&"RESET": SubResource("Animation_38b43"),
+&"Rotation": SubResource("Animation_ftrom")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wg8co"]
+radius = 0.7700111
+
+[node name="Power_Up" type="Area3D"]
+script = ExtResource("1_t02xc")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+material_override = SubResource("StandardMaterial3D_elqa8")
+mesh = SubResource("BoxMesh_t02xc")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_elqa8")
+mesh = SubResource("BoxMesh_t02xc")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_axa5m")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_wg8co")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://pd2gyhbsxt3y"]
+
+[ext_resource type="Script" uid="uid://bqw0a06t6rode" path="res://scriptcs/enemy.gd" id="1_b0co0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7gxd5"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b0co0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0co0"]
+albedo_color = Color(0, 0.5764706, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b0co0"]
+size = Vector3(0.5, 0.1, 0.1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wrjwy"]
+
+[node name="enemy" type="CharacterBody3D" groups=["enemy"]]
+script = ExtResource("1_b0co0")
+
+[node name="holder" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="holder"]
+material_override = SubResource("StandardMaterial3D_7gxd5")
+mesh = SubResource("CapsuleMesh_b0co0")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5543046, -0.455896)
+material_override = SubResource("StandardMaterial3D_b0co0")
+mesh = SubResource("BoxMesh_b0co0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wrjwy")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
